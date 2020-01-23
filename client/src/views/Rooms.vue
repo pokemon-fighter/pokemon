@@ -1,57 +1,43 @@
 <template>
-  <div class="rooms">
-    <div v-for="room in rooms" :key="room.id">
-        <h1>{{room.roomName}}</h1>
-    </div>
-    <form @submit.prevent="addRoom">
-      <input v-model="roomName" type="text" placeholder="Input room name">
-      <input v-model="roomCode" type="number" placeholder="0">
-      <input type="submit" value="submit">
-    </form>
+  <div>
+    <b-container fluid class="rooms">
+        <form @submit.prevent="addNewRoom" class="text-center">
+            <input class="mr-1" v-model="roomName" type="text" placeholder="Input room name">
+            <input class="ml-1 mr-1" v-model="roomCode" type="number" placeholder="Input room code(number)">
+            <b-button variant="primary">Submit</b-button>
+        </form>
+        <b-card-group columns class="mt-5 flex">
+            <div v-for="room in rooms" :key="room.id">
+                <b-card bg-variant="light" :header="room.roomName" class="text-center mt-3">
+                    <b-card-text class="">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+                    <b-button variant="primary">Join</b-button>
+                </b-card>
+            </div>
+        </b-card-group>
+    </b-container>
   </div>
 </template>
 
 <script>
-import db from '../../firebase'
+import { mapState,mapActions } from 'vuex'
 
 export default {
   data() {
     return {
       roomName: '',
       roomCode: null,
-      rooms: []
     }
   },
-  created() {
-    db.collection('rooms').onSnapshot(querySnapshot => {
-      querySnapshot.docs.forEach(doc => {
-        console.log(doc.data(), doc.id)
-        this.rooms.push({
-            id:doc.id,
-            ...doc.data()
-        })
-      })
-    })
+  computed: {
+      ...mapState(['rooms'])
   },
   methods: {
-    addRoom() {
-      db.collection("rooms").add({
+    ...mapActions(['addRoom']),
+    addNewRoom() {
+      this.addRoom({
         roomName: this.roomName,
-        roomCode: this.roomCode,
-        player1: {},
-        player2: {},
-        matchStatus: {
-          player1: false,
-          player2: false,
-          round: 5
-        }
+        roomCode: this.roomCode
       })
-        .then( room => {
-          console.log(room, ' ROOM ADDED')
-        })
-        .catch( error => {
-          console.log('Error adding document: ',error)
-        })
       this.roomName = '',
       this.roomCode = ''
     }
@@ -60,5 +46,8 @@ export default {
 </script>
 
 <style>
-
+    .rooms {
+        background-image: url('../../public/room.jpg');
+        height: 98vh;
+    }
 </style>
