@@ -2,7 +2,8 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/about">About</router-link> |
+      <router-link to="/rooms">Rooms</router-link>
     </div>
     <router-view/>
   </div>
@@ -13,17 +14,13 @@ import db from '../firebase'
 
 export default {
   created() {
-    db.collection('rooms').onSnapshot(querySnapshot => {
-      querySnapshot.docs.forEach(doc => {
-        console.log(doc.data(), doc.id)
-      })
-    })
+    
   }
 }
 </script>
 
 <style>
-#app {
+/* #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -42,5 +39,5 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
-}
+} */
 </style>
