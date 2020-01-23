@@ -8,6 +8,20 @@
   </div>
 </template>
 
+<script>
+import db from '../firebase'
+
+export default {
+  created() {
+    db.collection('rooms').onSnapshot(querySnapshot => {
+      querySnapshot.docs.forEach(doc => {
+        console.log(doc.data(), doc.id)
+      })
+    })
+  }
+}
+</script>
+
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
