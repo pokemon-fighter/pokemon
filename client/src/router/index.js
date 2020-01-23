@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import CharacterSelect from '../views/CharacterSelect.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/wait',
     name: 'wait',
     component: () => import(/* webpackChunkName: "wait" */ '../views/Wait.vue')
+  },
+  {
+    path: '/CharacterSelect',
+    name: 'CharacterSelect',
+    component: CharacterSelect
   }
 ]
 
