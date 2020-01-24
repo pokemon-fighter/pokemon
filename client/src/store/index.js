@@ -15,7 +15,12 @@ export default new Vuex.Store({
     roomName: '',
     playerRole: '',
     opponentRole: '',
-    roomId: ''
+    roomId: '',
+    userName: '',
+    pokemonData: [],
+    roomBG: new Audio(require('../../public/sounds/pokemonCenter.mp3')),
+    homeBG: new Audio(require('../../public/sounds/pokemonstart.mp3')),
+    battleBG: new Audio(require('../../public/sounds/battleTheme.mp3'))
   },
   mutations: {
     SET_ROOMS( state,payload ) {
@@ -35,6 +40,25 @@ export default new Vuex.Store({
     },
     SET_ROOM_ID( state,payload ) {
       state.roomId = payload
+    },
+    pokemonPass(state, payload){
+      state.pokemonData = payload
+      // console.log(state.pokemonData)
+    },
+    homeBGStart(state){
+      state.homeBG.play()
+    },
+    roomBGStart(state){
+      state.roomBG.play()
+    },
+    battleBGStart(state){
+      state.battleBG.play()
+    },
+    roomBGStop(state){
+      state.roomBG.pause()
+    },
+    SetUsername(state, payload) {
+      state.userName = payload
     }
   },
   actions: {
@@ -70,16 +94,17 @@ export default new Vuex.Store({
       })
         .then( room => {
           commit('SET_ROOM_ID',room.id);
+          console.log(room)
           return db.collection('rooms').doc(room.id).set({
-            player1: {username:state.player1Name}
+            player1: {username:state.userName}
           },{ merge:true })
         })
         .then( () => {
           console.log('ADDED PLAYER 1')
           commit('SET_ROOM_CODE',payload.roomCode)
           commit('SET_ROOM_NAME',payload.roomName)
-          commit('SET_PLAYER_ROLE','Player 1')
-          commit('SET_OPPONENT_ROLE','Player 2')
+          commit('SET_PLAYER_ROLE','player1')
+          commit('SET_OPPONENT_ROLE','player2')
 
           router.push({path:'/wait'})
         })
@@ -95,25 +120,36 @@ export default new Vuex.Store({
           console.log(doc.data().roomCode,"INI DOC")
           if(doc.data().roomCode === payload.roomCode) {
             commit('SET_ROOM_ID',payload.id);
-            return db.collection("rooms").doc(payload.id).set({
-              player2: {username:state.player2Name},
+            return db.collection("rooms").doc(payload.id).update({
+              player2: {username:state.userName},
               "connection_state.player2": true
-            },{merge:true})
+            })
           } else {
             throw {Error:'Wrong room code'}
           }
         })
         .then( () => {
           console.log('ADDED PLAYER 2')
-          commit('SET_PLAYER_ROLE','Player 2')
-          commit('SET_OPPONENT_ROLE','Player 1')
+          commit('SET_PLAYER_ROLE','player2')
+          commit('SET_OPPONENT_ROLE','player1')
           router.push({path:'/wait'})
         })
         .catch( error => {
           console.log('Error adding player 2', error)
         })
-    }
+    
   },
-  modules: {
+  getPokemons({ commit }){
+    let pokemons=[]
+    db.collection('pokemons').get()
+    .then(doc=>{
+      doc.forEach(data=>{
+        // console.log(data.data())
+        pokemons.push(data.data())
+      })
+    })
+    // console.log(pokemons)
+    commit('pokemonPass', pokemons)
   }
+}
 })

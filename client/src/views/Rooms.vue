@@ -46,7 +46,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .rooms {
         background-image: url('../../public/room.jpg');
         height: 98vh;
