@@ -17,9 +17,16 @@ export default {
   methods: {
     ...mapActions(['getRooms'])
   },
+  data () {
+    return {
+      
+    }
+  },
   created() {
+    this.$store.dispatch('getPokemons')
     this.getRooms()
-  }
+  },
+  
 }
 </script>
 
