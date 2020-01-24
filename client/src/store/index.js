@@ -8,6 +8,7 @@ import db from '../../firebase'
 
 export default new Vuex.Store({
   state: {
+<<<<<<< HEAD
     rooms: null,
     player1Name: '',
     player2Name: '',
@@ -63,6 +64,25 @@ export default new Vuex.Store({
     SetUsername(state, payload) {
       state.userName = payload
     },
+=======
+    player1: null,
+    player2: null,
+    matchStatus: null,
+    heroes: [
+      {
+        name: 'pokemon',
+        attack: 75,
+        defense: 25
+      },
+      {
+        name: 'heroLain',
+        attack: 25,
+        defense: 75
+      }
+    ]
+  },
+  mutations: {
+>>>>>>> c7df00112b8d6ffa55fbb20aea03623028687b6e
     setPlayer1(state, payload) {
       state.player1 = payload
     },
@@ -74,6 +94,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
+<<<<<<< HEAD
     getRooms({ commit }) {
       db.collection('rooms').onSnapshot(querySnapshot => {
         let roomss = []
@@ -177,6 +198,11 @@ export default new Vuex.Store({
     getData({ commit, state }) {
       db.collection('rooms')
         .doc(state.roomId)
+=======
+    getData({ commit }) {
+      db.collection('rooms')
+        .doc('V7klZQTu85ksbo2eHxZn')
+>>>>>>> c7df00112b8d6ffa55fbb20aea03623028687b6e
         .onSnapshot(querySnapshot => {
           // console.log(querySnapshot.data().player1)
           commit('setPlayer1', querySnapshot.data().player1)
@@ -184,5 +210,10 @@ export default new Vuex.Store({
           commit('setMatchStatus', querySnapshot.data().matchStatus)
         })
     }
+<<<<<<< HEAD
   }
+=======
+  },
+  modules: {}
+>>>>>>> c7df00112b8d6ffa55fbb20aea03623028687b6e
 })
