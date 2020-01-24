@@ -8,12 +8,18 @@
 import db from '../firebase'
 
 export default {
+  data () {
+    return {
+      
+    }
+  },
   created() {
     db.collection('rooms').onSnapshot(querySnapshot => {
       querySnapshot.docs.forEach(doc => {
         console.log(doc.data(), doc.id)
       })
     })
+    this.$store.dispatch('getPokemons')
   }
 }
 </script>

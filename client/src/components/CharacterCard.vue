@@ -1,13 +1,20 @@
 <template>
   <b-col class="pokemonCard mx-2 my-2">
-    <img src="../../public/chikorita.png">
+    <img v-b-popover.hover.v-primary="`attack: ${pokeData.atk}\ndefense: ${pokeData.def}`" :title="pokeData.name" :src="pokeData.selectImg">
     <b-button>I Choose You!</b-button>
   </b-col>
 </template>
 
 <script>
 export default {
-    name: 'CharacterCard'
+    name: 'CharacterCard',
+    props: ['pokeData'],
+    data() {
+        return {
+        }
+    },
+    methods: {
+    }
 }
 </script>
 
@@ -20,6 +27,10 @@ export default {
         background-image: url('../../public/ballbg.png');
         background-repeat: no-repeat;
         background-size: cover;
+    }
+    .pokemonCard:hover {
+        transform: scale(1.05);
+        transition: 1s;
     }
     .pokemonCard img {
         height: 80%;
