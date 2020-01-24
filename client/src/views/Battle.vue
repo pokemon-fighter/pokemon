@@ -25,13 +25,13 @@
       </b-row>
       <b-row class="pokemonPlacement">
           <b-col id="Sprite1">
-              <img src="../../public/sprites/chikorita.gif" alt="plyr1" class="pokemonChar">
+              <img src="../../public/sprites/chikorita.gif" alt="plyr1" class="pokemonChar mx-2">
           </b-col>
           <b-col v-if="fire">
               <img id="attack1" src="../../public/fireAttack.png" alt="plyr1">
           </b-col>
           <b-col id="Sprite2">
-              <img src="../../public/sprites/pikachu.gif" alt="plyr1" class="pokemonChar">
+              <img src="../../public/sprites/pikachu.gif" alt="plyr1" class="pokemonChar mx-2">
           </b-col>
       </b-row>
       <b-row align-h="between" style="color:white;font-family: 'Press Start 2P', cursive;">
@@ -74,7 +74,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
  #battleArena {
      background-image: url('../../public/stadium.png');

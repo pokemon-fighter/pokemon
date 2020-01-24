@@ -1,6 +1,6 @@
 <template>
 <b-container fluid id="selectBG">
-  <b-container id="pokebox">
+  <b-container id="pokebox" style="text-align:center;">
       <div id="boxHeader">
       <h1>Choose Your Partner!</h1>
       </div>

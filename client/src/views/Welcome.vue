@@ -1,6 +1,6 @@
 <template>
   <b-container fluid id="welcomePage">
-      <b-row align-v="center">
+      <b-row align-v="center" style="text-align: center;">
           <b-col cols="6" id="profCol">
               <img src="../../public/oak.png" alt="oak" id="prof">
           </b-col>
@@ -15,7 +15,7 @@
               <b-button @click="createRoomToggle" variant="outline-danger" class="mx-1 fade-in">
                   Create Room
               </b-button>
-              <b-button variant="outline-danger" class="mx-1 fade-in">
+              <b-button variant="outline-danger" @click="joinRoom" class="mx-1 fade-in">
                   Join Room
               </b-button>
           </b-col>
@@ -60,7 +60,7 @@
               <b-button variant="success" v-if="form1" @click="nextCode" class="mx-1 fade-in">
                   Next
               </b-button>
-              <b-button variant="success" v-if="next" @click="nextCode" class="mx-1 fade-in">
+              <b-button variant="success" v-if="next" @click="createRoom" class="mx-1 fade-in">
                   CreateRoom
               </b-button>
           </b-col>
@@ -91,6 +91,7 @@ export default {
   },
   methods: {
       nameInput(){
+          this.$store.commit('SetUsername', this.input)
           this.username = this.input
       },
       createRoomToggle(){
@@ -100,6 +101,17 @@ export default {
       nextCode(){
         this.form1 = false
         this.next = true
+      },
+      joinRoom(){
+        this.$router.push({
+          path: '/rooms'
+        })
+      },
+      createRoom() {
+        this.$store.dispatch('addRoom',{
+          roomName:this.form.roomName,
+          roomCode:this.form.roomCode
+        })
       }
   }
 }

@@ -15,8 +15,9 @@ export default {
     },
     created() {
         db.collection('rooms').doc(this.roomId).onSnapshot(doc => {
+            console.log(doc.data())
             if(doc.data().connection_state[this.opponentRole]) {
-                this.$route.push({path: '/play'})
+                this.$router.push({path: '/CharacterSelect'})
             }
           
         })
