@@ -14,6 +14,9 @@ export default {
         }
     },
     methods: {
+        pokemonPicked(pokeObj){
+            
+        }
     }
 }
 </script>
