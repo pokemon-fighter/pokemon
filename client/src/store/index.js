@@ -9,11 +9,13 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     rooms: null,
-    player1Name: 'Richard',
-    player2Name: 'Khonan',
+    player1Name: '',
+    player2Name: '',
     roomCode: '',
     roomName: '',
     playerRole: '',
+    opponentRole: '',
+    roomId: ''
   },
   mutations: {
     SET_ROOMS( state,payload ) {
@@ -27,6 +29,12 @@ export default new Vuex.Store({
     },
     SET_PLAYER_ROLE( state,payload ) {
       state.playerRole = payload
+    },
+    SET_OPPONENT_ROLE( state,payload ) {
+      state.opponentRole = payload
+    },
+    SET_ROOM_ID( state,payload ) {
+      state.roomId = payload
     }
   },
   actions: {
@@ -51,21 +59,28 @@ export default new Vuex.Store({
         roomName: payload.roomName,
         roomCode: payload.roomCode,
         matchStatus: {
-          player1: false,
-          player2: false,
+          player1: "",
+          player2: "",
           round: 5
+        },
+        connection_state: {
+          player1: true,
+          player2: false
         }
       })
         .then( room => {
+          commit('SET_ROOM_ID',room.id);
           return db.collection('rooms').doc(room.id).set({
             player1: {username:state.player1Name}
           },{ merge:true })
         })
-        .then( result => {
+        .then( () => {
           console.log('ADDED PLAYER 1')
           commit('SET_ROOM_CODE',payload.roomCode)
           commit('SET_ROOM_NAME',payload.roomName)
           commit('SET_PLAYER_ROLE','Player 1')
+          commit('SET_OPPONENT_ROLE','Player 2')
+
           router.push({path:'/wait'})
         })
         .catch( error => {
@@ -79,8 +94,10 @@ export default new Vuex.Store({
         .then( doc => {
           console.log(doc.data().roomCode,"INI DOC")
           if(doc.data().roomCode === payload.roomCode) {
+            commit('SET_ROOM_ID',payload.id);
             return db.collection("rooms").doc(payload.id).set({
-              player2: {username:state.player2Name}
+              player2: {username:state.player2Name},
+              "connection_state.player2": true
             },{merge:true})
           } else {
             throw {Error:'Wrong room code'}
@@ -88,6 +105,9 @@ export default new Vuex.Store({
         })
         .then( () => {
           console.log('ADDED PLAYER 2')
+          commit('SET_PLAYER_ROLE','Player 2')
+          commit('SET_OPPONENT_ROLE','Player 1')
+          router.push({path:'/wait'})
         })
         .catch( error => {
           console.log('Error adding player 2', error)
