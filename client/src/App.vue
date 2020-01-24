@@ -1,49 +1,51 @@
 <template>
   <div id="app">
-    <router-view/>
+<<<<<<< HEAD
+=======
+    <!-- <router-link to="/">Home</router-link> | -->
+>>>>>>> c7df00112b8d6ffa55fbb20aea03623028687b6e
+    <router-view />
   </div>
 </template>
 
 <script>
+<<<<<<< HEAD
 import db from '../firebase'
 import { mapActions } from 'vuex'
 
 export default {
   methods: {
-    ...mapActions(['getRooms'])
+    ...mapActions(['getRooms', 'getData'])
   },
-  data () {
-    return {
-      
-    }
+  data() {
+    return {}
   },
   created() {
     this.$store.dispatch('getPokemons')
     this.getRooms()
+=======
+import { mapActions } from 'vuex'
+export default {
+  data() {
+    return {}
   },
-  
+  methods: {
+    ...mapActions(['getData'])
+  },
+  created() {
+>>>>>>> c7df00112b8d6ffa55fbb20aea03623028687b6e
+    this.getData()
+  }
 }
 </script>
 
+<<<<<<< HEAD
+<style></style>
+=======
 <style>
-/* #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+body {
+  /* background-image: url('http://xdesktopwallpapers.com/wp-content/uploads/2012/04/Cool%20Vs%20Hot%20Fists%20On%20Black%20Background.jpg'); */
+  /* background: grey; */
 }
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-} */
 </style>
+>>>>>>> c7df00112b8d6ffa55fbb20aea03623028687b6e
