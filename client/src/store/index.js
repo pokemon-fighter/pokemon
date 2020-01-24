@@ -2,11 +2,15 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import db from '../../firebase'
 
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    rooms: []
+    rooms: null,
+    player1Name: 'Richard',
+    player2Name: 'Khonan',
+    playerRole: '',
   },
   mutations: {
     SET_ROOMS( state,payload ) {
@@ -15,23 +19,26 @@ export default new Vuex.Store({
   },
   actions: {
     getRooms({commit}) {
-      let rooms = []
       db.collection('rooms').onSnapshot(querySnapshot => {
+        let roomss = []  
         querySnapshot.docs.forEach(doc => {
-          rooms.push({
+          roomss.push({
               id:doc.id,
               ...doc.data()
           })
+          // rooms = 
         })
+        console.log(1, roomss)
+        commit('SET_ROOMS',roomss)
       })
-      commit('SET_ROOMS',rooms)
+      // rooms=[]
     },
-    addRoom({commit},payload) {
+    addRoom({commit,state},payload) {
+      // rooms = []
+      console.log(payload,"ini payload")
       db.collection("rooms").add({
         roomName: payload.roomName,
         roomCode: payload.roomCode,
-        player1: {},
-        player2: {},
         matchStatus: {
           player1: false,
           player2: false,
@@ -39,10 +46,28 @@ export default new Vuex.Store({
         }
       })
         .then( room => {
-          console.log(room, ' ROOM ADDED')
+          console.log(rooms,"ini room")
+          return db.collection('rooms').doc(room.id).set({
+            player1: {username:state.player1Name}
+          },{ merge:true })
+        })
+        .then( result => {
+          console.log('ADDED PLAYER 1')
         })
         .catch( error => {
           console.log('Error adding document: ',error)
+        })
+    },
+    joinRoom({commit,state},payload) {
+      console.log(payload, "INI PAYLOAD")
+      db.collection("rooms").doc(payload).set({
+        player2: {username:state.player2Name}
+      },{ merge: true})
+        .then( () => {
+          console.log('ADDED PLAYER 2')
+        })
+        .catch( error => {
+          console.log('Error adding player 2', error)
         })
     }
   },
