@@ -1,7 +1,7 @@
 <template>
   <b-col class="pokemonCard mx-2 my-2">
     <img v-b-popover.hover.v-primary="`attack: ${pokeData.atk}\ndefense: ${pokeData.def}`" :title="pokeData.name" :src="pokeData.selectImg">
-    <b-button>I Choose You!</b-button>
+    <router-link to='/battle'><b-button>I Choose You!</b-button></router-link>
   </b-col>
 </template>
 

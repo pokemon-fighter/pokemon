@@ -25,13 +25,13 @@
       </b-row>
       <b-row class="pokemonPlacement">
           <b-col id="Sprite1">
-              <img src="../../public/sprites/charmander.gif" alt="plyr1">
+              <img src="../../public/sprites/chikorita.gif" alt="plyr1" class="pokemonChar">
           </b-col>
           <b-col v-if="fire">
               <img id="attack1" src="../../public/fireAttack.png" alt="plyr1">
           </b-col>
           <b-col id="Sprite2">
-              <img src="../../public/sprites/squirtle.gif" alt="plyr1">
+              <img src="../../public/sprites/pikachu.gif" alt="plyr1" class="pokemonChar">
           </b-col>
       </b-row>
       <b-row align-h="between" style="color:white;font-family: 'Press Start 2P', cursive;">
@@ -106,5 +106,8 @@ export default {
  .roundsWon {
      background-color: rgba(0, 0, 0, 0.75);
      border-radius: 5%;
+ }
+ .pokemonChar {
+     height: 25vh;
  }
 </style>
