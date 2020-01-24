@@ -24,6 +24,9 @@
     <div>{{ allHero }}</div>
     <div>{{ player1Hero }}</div>
     <div>{{ player2Hero }}</div>
+    <div>Sekarang Ronde: {{ matchStatus.round }}</div>
+    <div>Player1 Point: {{ matchStatus.player1Point }}</div>
+    <div>Player2 Point: {{ matchStatus.player2Point }}</div>
   </div>
 </template>
 
@@ -51,7 +54,7 @@ export default {
       if (this.role === 'player1') {
         let attackValue =
           (this.player1Hero.attack / 100) * 5 * this.player1.damage
-        let defenseValue = ((100 - this.player2Hero.defense) / 100) * 5
+        let defenseValue = ((100 - this.player2Hero.defense) / 100) * 10
         this.player2.darah = this.player2.darah - attackValue - defenseValue
         // console.log(this.player2.darah)
         // console.log(this.player1Hero, this.player2Hero)
@@ -66,7 +69,7 @@ export default {
       } else if (this.role === 'player2') {
         let attackValue =
           (this.player2Hero.attack / 100) * 5 * this.player2.damage
-        let defenseValue = ((100 - this.player1Hero.defense) / 100) * 5
+        let defenseValue = ((100 - this.player1Hero.defense) / 100) * 10
         this.player1.darah = this.player1.darah - attackValue - defenseValue
         // console.log(this.player2.darah)
         // console.log(this.player2Hero, this.player2Hero)
@@ -112,8 +115,8 @@ export default {
             matchStatus: {
               player1: false,
               player2: false,
-              player1Point: this.matchStatus.player1Point,
-              player2Point: this.matchStatus.player2Point + 1,
+              player1Point: this.matchStatus.player1Point + 1,
+              player2Point: this.matchStatus.player2Point,
               round: this.matchStatus.round + 1
             }
           })
@@ -134,14 +137,18 @@ export default {
             matchStatus: {
               player1: false,
               player2: false,
-              player1Point: this.matchStatus.player1Point + 1,
-              player2Point: this.matchStatus.player2Point,
+              player1Point: this.matchStatus.player1Point,
+              player2Point: this.matchStatus.player2Point + 1,
               round: this.matchStatus.round + 1
             }
           })
       }
     },
-    matchStatus() {}
+    matchStatus: function(newValue, oldValue) {
+      if (newValue.player2Point === 3 || newValue.player1Point === 3) {
+        console.log('game finish')
+      }
+    }
   }
 }
 </script>
