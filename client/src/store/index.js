@@ -178,7 +178,7 @@ export default new Vuex.Store({
       db.collection('rooms')
         .doc(state.roomId)
         .onSnapshot(querySnapshot => {
-          console.log(querySnapshot.data().player1)
+          // console.log(querySnapshot.data().player1)
           commit('setPlayer1', querySnapshot.data().player1)
           commit('setPlayer2', querySnapshot.data().player2)
           commit('setMatchStatus', querySnapshot.data().matchStatus)
